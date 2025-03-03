@@ -7,4 +7,4 @@ project(RayTracing CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(ray_tracer src/rayTracer.cc)
+add_executable(main src/main.cc)
