@@ -24,6 +24,5 @@ inline double degrees_to_radians(double degrees){
 #include "ray.h"
 #include "vec3.h"
 #include "interval.h"
-#include "camera.h"
 
 #endif

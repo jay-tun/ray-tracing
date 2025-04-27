@@ -8,10 +8,34 @@ class camera {
     //Private camera variables
     int image_height;
     point3 center;
-    
+    point3 pixel00_loc;
+    vec3 pixel_delta_u;
+    vec3 pixel_delta_v;
+
 
     void initialize() {
-            
+        image_height = int(image_width / aspect_ratio);
+        image_height = (image_height < 1) ? 1 : image_height; 
+
+        center = point3(0, 0, 0);
+
+        //Viewport dimension
+        auto focal_length = 1.0;
+        auto viewport_height = 2.0;
+        auto viewport_width = viewport_height * (double(image_width)/image_height);
+
+        //vectors across the horizontal and down the vertical viewport edges
+        auto viewport_u = vec3(viewport_width, 0, 0);
+        auto viewport_v = vec3(0, -viewport_height, 0);
+
+         //horizontal and vertical delta vectors from pixel to pixel
+        pixel_delta_u = viewport_u / image_width;
+        pixel_delta_v = viewport_v / image_height;
+
+        //VP_upper_left corner and pixel 0,0 location
+        auto viewport_upper_left = center - vec3(0, 0, focal_length)
+                                    -viewport_u/2 - viewport_v/2;
+        pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
     }
     
     color ray_color(const ray& r, const hittable& world){
@@ -42,8 +66,8 @@ class camera {
             for (int i = 0; i < image_width; i++)
             {
                 auto pixel_center = pixel00_loc + (i * pixel_delta_u) + (j * pixel_delta_v);
-                auto ray_direction = pixel_center - camera_center;
-                ray r(camera_center, ray_direction);
+                auto ray_direction = pixel_center - center;
+                ray r(center, ray_direction);
                 
                 color pixel_color = ray_color(r, world);
                 write_color(std::cout, pixel_color);
