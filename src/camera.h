@@ -49,7 +49,6 @@ class camera {
         pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
 
         // Calculate the camera defocus disk basic vectors
-        auto defocus_radius =  
     }
 
     ray get_ray(int i, int j) const {
