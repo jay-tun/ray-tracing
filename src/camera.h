@@ -14,6 +14,8 @@ class camera {
     vec3 pixel_delta_u;
     vec3 pixel_delta_v;
     vec3 u, v, w;               //camera frame basis vectors
+    vec3 defocus_disk_u;        //defocus disk horizontal radius
+    vec3 defocus_disk_v;        //defocus disk vertical radius
 
     void initialize() {
         image_height = int(image_width / aspect_ratio);
@@ -24,10 +26,9 @@ class camera {
         center = lookfrom;
 
         //Viewport dimension
-        auto focal_length = (lookfrom - lookat).length();
         auto theta = degrees_to_radians(vfov);
         auto h = std::tan(theta/2);
-        auto viewport_height = 2 * h * focal_length;
+        auto viewport_height = 2 * h * focus_dist;
         auto viewport_width = viewport_height * (double(image_width)/image_height);
 
         //calculate the u, v, w vectors for the camera coordinate frame
@@ -44,8 +45,11 @@ class camera {
         pixel_delta_v = viewport_v / image_height;
 
         //VP_upper_left corner and pixel 0,0 location
-        auto viewport_upper_left = center - (focal_length * w) - viewport_u/2 - viewport_v/2;
+        auto viewport_upper_left = center - (focus_dist * w) - viewport_u/2 - viewport_v/2;
         pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
+
+        // Calculate the camera defocus disk basic vectors
+        auto defocus_radius =  
     }
 
     ray get_ray(int i, int j) const {
@@ -102,6 +106,9 @@ class camera {
     point3 lookfrom = point3(0, 0, 0); //point camera is looking from
     point3 lookat = point3(0, 0, -1); //point camera is looking at
     vec3 vup = vec3(0, 1, 0); //camera-relative 'up' direction
+
+    double defocus_angle = 0; //Variation angle of rays through each pixel
+    double focus_dist = 10; // distance from camera lookfrom point to plane of perfect focus
     
     void render(const hittable& world) {
         initialize();
