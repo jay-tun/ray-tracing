@@ -49,10 +49,13 @@ class camera {
         pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
 
         // Calculate the camera defocus disk basic vectors
+        auto defocus_radius = focus_dist * std::tan(degrees_to_radians(defocus_angle / 2));
+        defocus_disk_u = u * defocus_radius;
+        defocus_disk_v = v * defocus_radius;
     }
 
     ray get_ray(int i, int j) const {
-        //construct a camera originating at the origin and directed at randomly sampled 
+        //construct a camera originating from the defocus disk and directed at randomly sampled 
         //point around the pixel i, j
 
         auto offset = sample_square();
