@@ -62,7 +62,8 @@ class camera {
         auto pixel_sample = pixel00_loc +
                             ((i + offset.x()) * pixel_delta_u) +
                             ((j + offset.y()) * pixel_delta_v);
-        auto ray_origin = center;
+
+        auto ray_origin = (defocus_angle <= 0) ? center : defocus_disk_sample();
         auto ray_direction = pixel_sample - ray_origin;
 
         return ray(ray_origin, ray_direction);
@@ -71,6 +72,12 @@ class camera {
     vec3 sample_square() const {
         //returns the vector to a random point in [-0.5, -0.5] - [+0.5, +0.5] unit square
         return vec3(random_double() - 0.5, random_double() - 0.5, 0);
+    }
+
+    point3 defocus_disk_sample() const {
+        //returns a random point in the camera defocus disk
+        auto p = random_in_unit_disk();
+        return center + (p[0] * defocus_disk_u) + (defocus_disk_v * p[1]);
     }
     
     color ray_color(const ray& r, int depth, const hittable& world){
