@@ -58,15 +58,15 @@ This document summarizes the key ideas, concepts, and personal notes from the bo
 
 ---
 
-## ✅ Completion Milestone
+## Completion Milestone
 
-* ✅ Successfully rendered `final_image` with:
+* Successfully rendered `final_image` with:
 
   * 1200x675 resolution
   * 500 samples per pixel
   * 50 ray bounces
-* ✅ Verified material scattering and depth-of-field
-* ✅ Refactored and modularized codebase
+* Verified material scattering and depth-of-field
+* Refactored and modularized codebase
 
 ---
 
