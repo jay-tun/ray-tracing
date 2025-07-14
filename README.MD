@@ -4,38 +4,7 @@ This document summarizes the key ideas, concepts, and personal notes from the bo
 
 ---
 
-## 📘 Book Overview
-
-* **Title:** Ray Tracing in One Weekend
-* **Author:** Peter Shirley
-* **Link:** [raytracing.github.io/books/RayTracingInOneWeekend.html](https://raytracing.github.io/books/RayTracingInOneWeekend.html)
-* **Goal:** Create a minimal ray tracer that outputs a PPM image using spheres, materials, and recursive ray scattering.
-
----
-
-## 🛠️ Project Structure
-
-```
-ray-tracing/
-├── CMakeLists.txt
-├── build/
-├── images/
-├── src/
-│   ├── main.cc
-│   ├── vec3.h
-│   ├── ray.h
-│   ├── color.h
-│   ├── hittable.h
-│   ├── hittable_list.h
-│   ├── sphere.h
-│   ├── camera.h
-│   ├── material.h
-│   └── rtweekend.h
-```
-
----
-
-## 📐 Core Concepts
+## Core Concepts
 
 ### 1. **Vectors (vec3.h)**
 
@@ -71,7 +40,7 @@ ray-tracing/
 
 ---
 
-## 🌌 Rendering Pipeline
+## Rendering Pipeline
 
 1. **Scene Setup:** Define geometry, materials, and camera
 2. **Sampling:** Multiple rays per pixel for anti-aliasing
@@ -81,7 +50,7 @@ ray-tracing/
 
 ---
 
-## ⚙️ Optimization Tips
+## Optimization Tips
 
 * Avoid writing to `std::cout` in parallel
 * Use OpenMP only when output is buffered or saved after rendering
@@ -91,7 +60,7 @@ ray-tracing/
 
 ## ✅ Completion Milestone
 
-* ✅ Successfully rendered `final_scene` with:
+* ✅ Successfully rendered `final_image` with:
 
   * 1200x675 resolution
   * 500 samples per pixel
